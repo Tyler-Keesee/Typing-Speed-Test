@@ -135,74 +135,26 @@ button:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
+/* Small screens: keep the complete workflow in normal document flow.
+   The old fixed 40vh panels covered the timer, action buttons, and mobile keyboard. */
 @media (max-width: 480px) {
-    body {
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-    }
-
-    .container {
-        height: 100vh;
-        display: grid;
-        grid-template-rows: auto auto auto 1fr;
-        gap: 0.5rem;
-        padding: 1rem;
-        overflow: hidden;
-    }
-
-    .text-display {
-        height: 40vh;
-        overflow-y: auto;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        background: white;
-        z-index: 10;
-        padding: 1rem;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-
-    textarea {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 40vh;
-        padding: 1rem;
-        z-index: 10;
-        background: white;
-    }
-
-    .stats, .timer-select {
-        position: fixed;
-        top: 40vh;
-        left: 0;
-        right: 0;
-        background: white;
-        z-index: 11;
-        padding: 0.5rem;
-    }
-
-    .button-group {
-        position: fixed;
-        bottom: 40vh;
-        left: 0;
-        right: 0;
-        padding: 0.5rem;
-        background: white;
-        z-index: 11;
-    }
-}/* Add smooth scrolling for the entire page */
-* {
-    scroll-behavior: smooth;
+    body { display: block; min-height: 100dvh; height: auto; overflow-x: hidden; padding: 0.75rem; }
+    .container { width: 100%; max-width: 100%; height: auto; min-height: 0; padding: 1rem; display: block; }
+    h1 { font-size: clamp(1.5rem, 7vw, 2rem); }
+    .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.5rem; margin-bottom: 1rem; }
+    .stats p { min-width: 0; padding: 0.7rem 0.4rem; text-align: center; font-size: 0.85rem; overflow-wrap: anywhere; }
+    .text-display { position: static; height: auto; max-height: 32dvh; overflow-y: auto; padding: 1rem; margin-bottom: 0.9rem; }
+    textarea { position: static; height: min(26dvh, 160px); min-height: 110px; font-size: 16px; margin-bottom: 0.9rem; }
+    .timer-select, .button-group { position: static; padding: 0; margin: 0 0 1rem; }
+    .button-group { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.65rem; }
+    button { min-width: 0; padding: 0.85rem 0.6rem; }
 }
-
-/* Optimize touch interactions */
+@media (max-width: 330px) { .button-group { grid-template-columns: 1fr; } }
+:focus-visible { outline: 3px solid #3949ab; outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
 @media (hover: none) {
-    .text-display, textarea {
-        -webkit-overflow-scrolling: touch;
-    }
+    button { min-height: 44px; }
+    .text-display, textarea { -webkit-overflow-scrolling: touch; }
 }
